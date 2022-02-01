@@ -11,42 +11,57 @@
  * list out the Cart items in another column
 */
 function NavBar({ stockitems }) {
-  const [cart,  setCart]  = React.useState([]);   // first use of useState()
   const [stock, setStock] = React.useState(stockitems);
-  const { Button } = ReactBootstrap;
+  const [cart,  setCart]  = React.useState([]);   // first use of useState()
+  const { Button }        = ReactBootstrap;
 
   // Note: event can get only 1 argument. But say we want item name:id?
-  // IDEA: Use anonymous function to concat the 2 values into 1 string.
+  // IDEA: Concat the 2+ values into 1 string separated by a separator like ":"
   // E.g. event apple:2
-  const moveToCart = (id, e) => {
-    console.log(id)
+  const moveToCart = (e) => {
     let [name, num] = e.target.innerHTML.split(":");
-    let newStock = stock.map((item, index) => {
-      if ((item.name == name) && (item.instock > 0)) {
-        item.instock--;
-      }
+    if (num <= 0)   return      // zero items in stock
+
+    // get item with name from stock and update stock
+    let item = stock.filter((item) => item.name == name);
+
+    let newStock = stock.map(item => {
+      if (item.name == name) item.instock--;
       return item;
     });
-    setStock(newStock);
-    // let [newCart, num] = 
-    // setCart(newCart)
-  };
 
-  const updatedList = stock.map((item, index) => {
+    setStock(newStock);
+    setCart([...cart, ...item])
+    console.log(`Cart: ${JSON.stringify(cart)}`);
+};
+
+  const updatedList = stockitems.map((item, index) => {
     // We want to send 2+ parameters to moveToCard(), but onClick will
     // only allow one argument to be passed.  IDEA: Use anonymous function
     // to concat the 2 values into 1 string. E.g. event apple:2
     return (
-      <Button onClick={e => moveToCart({id:1}, e)} key={index}>{item.name}:{item.instock}</Button>
+      <Button key={index} onClick={moveToCart} >{item.name}:{item.instock}</Button>
     );
   });
 
   // note that React needs to have a single Parent
   return (<>
-      <ul style={{ listStyleType: "none" }}>{updatedList}</ul>
+      <ul key="stock" style={{ listStyleType: "none" }}>{updatedList}</ul>
       <h1>Shopping Cart</h1>
-      <ul style={{ listStyleType: "none" }}>{updatedList}</ul>
+      <Cart cartitems={cart}>Cart Items</Cart>
   </>);
+}
+
+function Cart({ cartitems }) {
+    const { Card, Button } = ReactBootstrap;
+    console.log("rendering Cart");
+
+    const updatedList = cartitems.map((item, index) => {
+      return <Button key={index}>{item.name}</Button>;
+    });
+    return (
+      <ul style={{ listStyleType: "none" }} key="cart">{updatedList}</ul>
+    );
 }
 
 const menuItems = [
