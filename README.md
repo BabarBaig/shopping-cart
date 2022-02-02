@@ -6,4 +6,4 @@ When user clicks on a fruit, it's added to the Shopping Cart
 
 ## To Run
 
-<www.cnn.com>
+<https://babarbaig.github.io/shopping-cart/>
