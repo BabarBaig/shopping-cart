@@ -220,5 +220,5 @@ const Products = (props) => {
     </Container>
   );
 };
-// ========================================
+
 ReactDOM.render(<Products />, document.getElementById("root"));
