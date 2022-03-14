@@ -1,10 +1,13 @@
-// sumulate getting products from DataBase
+// @ts-check
+
+// simulate getting products from DataBase
 const products = [
   { name: "Apples_:", country: "Italy", cost: 3, instock: 10 },
   { name: "Oranges:", country: "Spain", cost: 4, instock:  3 },
   { name: "Beans__:", country: "USA"  , cost: 2, instock:  5 },
   { name: "Cabbage:", country: "USA"  , cost: 1, instock:  8 },
 ];
+
 //=========Cart=============
 const Cart = (props) => {
   const { Card, Accordion, Button } = ReactBootstrap;
@@ -23,7 +26,9 @@ const useDataApi = (initialUrl, initialData) => {
     isError: false,
     data: initialData,
   });
+
   console.log(`useDataApi called`);
+
   useEffect(() => {
     console.log("useEffect Called");
     let didCancel = false;
@@ -41,13 +46,13 @@ const useDataApi = (initialUrl, initialData) => {
         }
       }
     };
+
     fetchData();
-    return () => {
-      didCancel = true;
-    };
+    return () => { didCancel = true; };
   }, [url]);
   return [state, setUrl];
 };
+
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case "FETCH_INIT":
@@ -76,7 +81,7 @@ const dataFetchReducer = (state, action) => {
 
 const Products = (props) => {
   const [items, setItems] = React.useState(products);
-  const [cart, setCart] = React.useState([]);
+  const [cart, setCart  ] = React.useState([]);
   const [total, setTotal] = React.useState(0);
   const {
     Card,
@@ -88,6 +93,7 @@ const Products = (props) => {
     Image,
     Input,
   } = ReactBootstrap;
+
   //  Fetch Data
   const { Fragment, useState, useEffect, useReducer } = React;
   const [query, setQuery] = useState("http://localhost:1337/products");
@@ -98,6 +104,7 @@ const Products = (props) => {
     }
   );
   console.log(`Rendering Products ${JSON.stringify(data)}`);
+
   // Fetch Data
   const addToCart = (e) => {
     let name = e.target.name;
@@ -107,6 +114,7 @@ const Products = (props) => {
     console.log(`add to Cart ${JSON.stringify(item)}`);
     setCart([...cart, ...item]);
   };
+
   const deleteCartItem = (delIndex) => {
     // this is the index in the cart not in the Product List
 
@@ -119,6 +127,7 @@ const Products = (props) => {
     setCart(newCart);
     setItems(newItems);
   };
+
   const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
 
   let list = items.map((item, index) => {
@@ -134,6 +143,7 @@ const Products = (props) => {
       </li>
     );
   });
+  
   let cartList = cart.map((item, index) => {
     return (
       <Card key={index}>
