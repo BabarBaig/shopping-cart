@@ -1,11 +1,13 @@
 // @ts-check
+// import React, { Component } from "react";
+// import { Form, Col, Button } from "react-bootstrap";
 
 // simulate getting products from DataBase
 const products = [
-  { name: "Apples_:", country: "Italy", cost: 3, instock: 10 },
-  { name: "Oranges:", country: "Spain", cost: 4, instock:  3 },
-  { name: "Beans__:", country: "USA"  , cost: 2, instock:  5 },
-  { name: "Cabbage:", country: "USA"  , cost: 1, instock:  8 },
+  { name: "Apples_:", country: "Italy", cost: 3, instock: 99 },
+  { name: "Oranges:", country: "Spain", cost: 4, instock: 98 },
+  { name: "Beans__:", country: "USA"  , cost: 2, instock: 97 },
+  { name: "Cabbage:", country: "USA"  , cost: 1, instock: 96 },
 ];
 
 //=========Cart=============
@@ -26,11 +28,10 @@ const useDataApi = (initialUrl, initialData) => {
     isError: false,
     data: initialData,
   });
-
   console.log(`useDataApi called`);
 
   useEffect(() => {
-    console.log("useEffect Called");
+    console.log("useEffect called");
     let didCancel = false;
     const fetchData = async () => {
       dispatch({ type: "FETCH_INIT" });
@@ -96,13 +97,9 @@ const Products = (props) => {
 
   //  Fetch Data
   const { Fragment, useState, useEffect, useReducer } = React;
-  const [query, setQuery] = useState("http://localhost:1337/products");
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    "http://localhost:1337/products",
-    {
-      data: [],
-    }
-  );
+  const [query, setQuery] = useState("http://localhost:1337/api/products");
+  const [{ data, isLoading, isError }, doFetch] = 
+      useDataApi( "http://localhost:1337/api/products", { data: [],} );
   console.log(`Rendering Products ${JSON.stringify(data)}`);
 
   // Fetch Data
@@ -231,4 +228,4 @@ const Products = (props) => {
   );
 };
 
-ReactDOM.render(<Products />, document.getElementById("root"));
+ReactDOM.render(<Products/>, document.getElementById("root"));
