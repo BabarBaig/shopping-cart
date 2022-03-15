@@ -84,16 +84,7 @@ const Products = (props) => {
   const [items, setItems] = React.useState(products);
   const [cart, setCart  ] = React.useState([]);
   const [total, setTotal] = React.useState(0);
-  const {
-    Card,
-    Accordion,
-    Button,
-    Container,
-    Row,
-    Col,
-    Image,
-    Input,
-  } = ReactBootstrap;
+  const {Card, Accordion, Button, Container, Row, Col, Image, Input} = ReactBootstrap;
 
   //  Fetch Data
   const { Fragment, useState, useEffect, useReducer } = React;
